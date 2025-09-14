@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #666;
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+      opacity: 0.5;
+      transition: opacity 1s;
+    }
+    .fade {
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <video id="lowEnergyVideo" width="640" height="360" controls>
+    <source src="yourvideo2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div id="lowOverlay" class="overlay">Eh.</div>
+
+  <script>
+    const video = document.getElementById('lowEnergyVideo');
+    const overlay = document.getElementById('lowOverlay');
+    let fadeInterval;
+
+    function startLowEnergy() {
+      // Slow fade every 2 seconds for a sluggish feel
+      fadeInterval = setInterval(() => {
+        overlay.classList.toggle('fade');
+        overlay.textContent = overlay.textContent === 'Eh.' ? 'Whatever.' : 'Eh.';
+      }, 2000);
+    }
+
+    function stopLowEnergy() {
+      clearInterval(fadeInterval);
+      overlay.classList.remove('fade');
+      overlay.textContent = 'Eh.';
+    }
+
+    video.addEventListener('play', startLowEnergy);
+    video.addEventListener('pause', stopLowEnergy);
+    video.addEventListener('ended', stopLowEnergy);
+  </script>
+</body>
+</html>
