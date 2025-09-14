@@ -1,2 +1,77 @@
 # ANItech
 It's a  relative applied nuerosensible delivery allocation system named ani imerssive video powered by ANI tech
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ANI Emotional Coding Demo</title>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    .container { display: flex; justify-content: space-around; margin: 20px; }
+    video { width: 45%; height: auto; }
+    .tab { margin: 10px; padding: 10px; cursor: pointer; background: #eee; }
+    .tab.active { background: #ff0; }
+    .overlay { position: absolute; top: 10px; left: 10px; font-size: 20px; opacity: 0; transition: opacity 0.5s; }
+    .pulse { opacity: 1; color: #ff0; } /* Giddy */
+    .fade { opacity: 0.4; color: #666; } /* Low */
+  </style>
+</head>
+<body>
+  <h1>ANI Demo: Flip Emotions with Narrow AI</h1>
+  <p>Toggle vibes on the same video—feel the difference!</p>
+  <div class="tab active" onclick="switchVibe('giddy')">Giddy Joy</div>
+  <div class="tab" onclick="switchVibe('low')">Low Energy</div>
+  <div class="container">
+    <video id="demoVideo" width="640" height="360" controls>
+      <source src="yourmirrorvideo.mp4" type="video/mp4">
+    </video>
+    <div id="overlay" class="overlay">Loading vibe...</div>
+  </div>
+
+  <script>
+    const video = document.getElementById('demoVideo');
+    const overlay = document.getElementById('overlay');
+    let currentVibe = 'giddy';
+    let interval;
+
+    function switchVibe(vibe) {
+      currentVibe = vibe;
+      overlay.className = 'overlay';
+      if (vibe === 'giddy') {
+        overlay.textContent = 'Wow!';
+        document.querySelector('.tab.active').classList.remove('active');
+        event.target.classList.add('active');
+      } else {
+        overlay.textContent = 'Eh.';
+        document.querySelector('.tab.active').classList.remove('active');
+        event.target.classList.add('active');
+      }
+      if (video.paused) return;
+      startVibe();
+    }
+
+    function startVibe() {
+      clearInterval(interval);
+      if (currentVibe === 'giddy') {
+        // Fast pulse: 120 BPM
+        interval = setInterval(() => {
+          overlay.classList.toggle('pulse');
+          overlay.textContent = overlay.textContent === 'Wow!' ? 'So Excited!' : 'Wow!';
+        }, 500);
+      } else {
+        // Slow fade: Sluggish
+        interval = setInterval(() => {
+          overlay.classList.toggle('fade');
+          overlay.textContent = overlay.textContent === 'Eh.' ? 'Whatever.' : 'Eh.';
+        }, 2000);
+      }
+    }
+
+    function stopVibe() { clearInterval(interval); overlay.classList.remove('pulse', 'fade'); }
+
+    video.addEventListener('play', startVibe);
+    video.addEventListener('pause', stopVibe);
+    video.addEventListener('ended', stopVibe);
+  </script>
+</body>
+</html>
