@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #ff0;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .pulse {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <video id="giddyVideo" width="640" height="360" controls>
+    <source src="yourvideo1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div id="giddyOverlay" class="overlay">Wow!</div>
+
+  <script>
+    const video = document.getElementById('giddyVideo');
+    const overlay = document.getElementById('giddyOverlay');
+    let pulseInterval;
+
+    function startGiddyJoy() {
+      // Pulse at ~120 BPM (500ms interval)
+      pulseInterval = setInterval(() => {
+        overlay.classList.toggle('pulse');
+        overlay.textContent = overlay.textContent === 'Wow!' ? 'So Excited!' : 'Wow!';
+      }, 500);
+    }
+
+    function stopGiddyJoy() {
+      clearInterval(pulseInterval);
+      overlay.classList.remove('pulse');
+      overlay.textContent = 'Wow!';
+    }
+
+    video.addEventListener('play', startGiddyJoy);
+    video.addEventListener('pause', stopGiddyJoy);
+    video.addEventListener('ended', stopGiddyJoy);
+  </script>
+</body>
+</html>
